@@ -1,4 +1,4 @@
-#
+##
 # Run menu :
 /gui/addMenu run Run
 /gui/addButton run "beamOn 1" "/run/beamOn 1"
