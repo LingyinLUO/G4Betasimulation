@@ -1,0 +1,53 @@
+#
+# Run menu :
+/gui/addMenu run Run
+/gui/addButton run "beamOn 1" "/run/beamOn 1"
+/gui/addButton run "beamOn 1k" "/run/beamOn 1000"
+/gui/addButton run "beamOn 10k" "/run/beamOn 10000"
+/gui/addButton run "beamOn 100k" "/run/beamOn 1000000"
+#
+# Viewer menu :
+/gui/addMenu viewer Viewer
+/gui/addButton viewer "Set style surface" "/vis/viewer/set/style surface"
+/gui/addButton viewer "Set style wireframe" "/vis/viewer/set/style wireframe"
+/gui/addButton viewer "Refresh viewer" "/vis/viewer/refresh"
+/gui/addButton viewer "Update viewer (interaction or end-of-file)" "/vis/viewer/update"
+/gui/addButton viewer "Flush viewer (= refresh + update)" "/vis/viewer/flush"
+/gui/addButton viewer "Update scene" "/vis/scene/notifyHandlers"
+#
+# Geometry menu :
+/gui/addMenu geometry Geometry
+/gui/addButton geometry "Window 1" "/B1detector/SetPosition 1"
+/gui/addButton geometry "Window 2" "/B1detector/SetPosition 2"
+/gui/addButton geometry "Window 3" "/B1detector/SetPosition 3"
+/gui/addButton geometry "Window 4" "/B1detector/SetPosition 4"
+/gui/addButton geometry "Window 5" "/B1detector/SetPosition 5"
+/gui/addButton geometry "Window 6" "/B1detector/SetPosition 6"
+/gui/addButton geometry "Window 7" "/B1detector/SetPosition 7"
+/gui/addButton geometry "Window 8" "/B1detector/SetPosition 8"
+/gui/addButton geometry "Al 0.01" "/B1detector/Althick 0.1 mm"
+/gui/addButton geometry "Al 0.02" "/B1detector/Althick 0.2 mm"
+/gui/addButton geometry "Al 0.03" "/B1detector/Althick 0.3 mm"
+/gui/addButton geometry "Al 0.04" "/B1detector/Althick 0.4 mm"
+#
+# Field menu :
+/gui/addMenu field Field
+/gui/addButton field "off"       "/globalField/setValue 0   0 0 tesla"
+/gui/addButton field "0.2 tesla" "/globalField/setValue 0.2 0 0 tesla"
+/gui/addButton field "2.0 tesla" "/globalField/setValue 2.0 0 0 tesla"
+#
+#Material menu :
+/gui/addMenu material Material
+/gui/addButton material "air" "/B1detector/SetMaterial air"
+/gui/addButton material "vacuum" "/B1detector/SetMaterial vacuum"
+#
+# File menu :
+/gui/addMenu file File
+/gui/addButton file "gunwindow1" "/B1generator/SetPosition 1"
+/gui/addButton file "gunwindow2" "/B1generator/SetPosition 2"
+/gui/addButton file "gunwindow3" "/B1generator/SetPosition 3"
+/gui/addButton file "gunwindow4" "/B1generator/SetPosition 4"
+/gui/addButton file "gunwindow5" "/B1generator/SetPosition 5"
+/gui/addButton file "gunwindow6" "/B1generator/SetPosition 6"
+/gui/addButton file "gunwindow7" "/B1generator/SetPosition 7"
+/gui/addButton file "gunwindow8" "/B1generator/SetPosition 8"
