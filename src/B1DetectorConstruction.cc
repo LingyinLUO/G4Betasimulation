@@ -364,7 +364,7 @@ materialAl,                      //material
     // magnetic
 
     G4UniformMagField* magField = 
-        new G4UniformMagField(G4ThreeVector(0.,0.,-655.5/1e4*tesla)); //define the magnetic.
+        new G4UniformMagField(G4ThreeVector(0.,0.,-655.5*gauss)); //define the magnetic.
     //G4FieldManager* fieldMgr = G4TransportationManager::GetTransportationManager()->GetFieldManager(); 
     G4FieldManager* fieldMgr =new G4FieldManager(); 
     fieldMgr->SetDetectorField(magField);

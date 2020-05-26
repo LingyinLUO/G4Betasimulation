@@ -32,9 +32,9 @@
 #
 # Field menu :
 /gui/addMenu field Field
-/gui/addButton field "off"       "/globalField/setValue 0   0 0 tesla"
-/gui/addButton field "0.2 tesla" "/globalField/setValue 0.2 0 0 tesla"
-/gui/addButton field "2.0 tesla" "/globalField/setValue 2.0 0 0 tesla"
+/gui/addButton field "off"       "/globalField/setValue 0   0 0 gauss"
+/gui/addButton field "655.5 gauss" "/globalField/setValue 655.5 0 0 gauss"
+/gui/addButton field "6555 gauss" "/globalField/setValue 6555 0 0 gauss"
 #
 #Material menu :
 /gui/addMenu material Material
