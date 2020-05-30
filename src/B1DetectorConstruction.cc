@@ -95,9 +95,9 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
     // ===================================================================================
     // World
-    G4double world_sizeX  = 1.2*400*mm;
-    G4double world_sizeY  = 1.2*250*mm;
-    G4double world_sizeZ  = 1.2*60*mm;
+    G4double world_sizeX  = 1.5*400*mm;
+    G4double world_sizeY  = 1.5*250*mm;
+    G4double world_sizeZ  = 1.5*60*mm;
     //world material
     world_mat = nist->FindOrBuildMaterial("G4_AIR");
 
@@ -249,8 +249,8 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
 
     // ===================================================================================
 
-    cylinderZ = (10+1+0.2)*mm;
-    // Al Cylinder 
+    cylinderZ = (20+1+0.2)*mm;
+    // Cylinder 
     G4Tubs*  solid_cylinder = 
         new G4Tubs("Cylinder",                        //its name
                 0,                                //Rmin
@@ -260,11 +260,11 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
                 360*degree);                      //Phimax
     G4LogicalVolume* log_cylinder = 
         new G4LogicalVolume(solid_cylinder,
-                materialAl,                      //material
+                materialVacuum,                      //material
                 "Cylinder");                      //name  
     G4RotationMatrix rotm = G4RotationMatrix();
     rotm.rotateX(90*degree);
-    G4ThreeVector position(detector_position,chamberYPos-100*mm-0.5*(cylinderZ)-10*mm,0);
+    G4ThreeVector position(detector_position,chamberYPos-100*mm-0.5*(cylinderZ)-20*0.5*mm,0);
     G4Transform3D transform(rotm,position);                                                                           
     phy_cylinder = new G4PVPlacement( transform,                       //no rotation
             log_cylinder,                //its logical volume
@@ -313,7 +313,7 @@ double Alslice_height=fAlthick;
 materialAl,                      //material
                           "Alslice");                      //name
   new G4PVPlacement( 0,
-                         G4ThreeVector(0,0,-0.2*mm),
+                         G4ThreeVector(0,0,5*mm),
                          logicAlslice,                //its logical volume
                          "Alslice",              //its name
                          log_cylinder,              //its mother  volume
@@ -327,13 +327,13 @@ materialAl,                      //material
     // half plane before dectector
     //the other half
     G4Box* left_plane_Al = new G4Box("left_plane",                 //its name
-            0.5*28.5*mm, 0.5*10*mm, 0.5*60*mm);     //its size 
+            0.5*20*mm, 0.5*10*mm, 0.5*45*mm);     //its size 
     G4LogicalVolume* log_left_plane_Al = 
         new G4LogicalVolume(left_plane_Al,
                 materialAl,                      //material
                 "left_plane");                      //name                                                                            
     phy_left_plane_Al = new G4PVPlacement( 0,                       //no rotation
-            G4ThreeVector(detector_position-15.75*mm,chamberYPos-100*mm-10*0.5*mm,0),
+            G4ThreeVector(detector_position-11.5*mm,chamberYPos-100*mm-10*0.5*mm,0),
             log_left_plane_Al,                //its logical volume
             "left_plane",              //its name
             logicWorld,              //its mother  volume
@@ -343,13 +343,13 @@ materialAl,                      //material
 
     //the other half
     G4Box* right_plane_Al = new G4Box("right_plane",                 //its name
-            0.5*28.5*mm, 0.5*10*mm, 0.5*60*mm);     //its size 
+            0.5*20*mm, 0.5*10*mm, 0.5*45*mm);     //its size 
     G4LogicalVolume* log_right_plane_Al = 
         new G4LogicalVolume(right_plane_Al,
                 materialAl,                      //material
                 "right_plane");                      //name                                                                            
     phy_right_plane_Al = new G4PVPlacement( 0,                       //no rotation
-            G4ThreeVector(detector_position+15.75*mm,chamberYPos-100*mm-10*0.5*mm,0),
+            G4ThreeVector(detector_position+11.5*mm,chamberYPos-100*mm-10*0.5*mm,0),
             log_right_plane_Al,                //its logical volume
             "right_plane",              //its name
             logicWorld,              //its mother  volume

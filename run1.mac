@@ -11,7 +11,7 @@
 /rlt/SetFileName test1.root
 /B1generator/SetPosition 1
 /B1detector/SetPosition 1
-/B1detector/Althick 0.2
+/B1detector/Althick 0.2 mm
 /B1detector/SetMaterial air
 #
 /control/verbose 0
