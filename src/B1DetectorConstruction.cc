@@ -1,33 +1,3 @@
-//
-// ********************************************************************
-// * License and Disclaimer                                           *
-// *                                                                  *
-// * The  Geant4 software  is  copyright of the Copyright Holders  of *
-// * the Geant4 Collaboration.  It is provided  under  the terms  and *
-// * conditions of the Geant4 Software License,  included in the file *
-// * LICENSE and available at  http://cern.ch/geant4/license .  These *
-// * include a list of copyright holders.                             *
-// *                                                                  *
-// * Neither the authors of this software system, nor their employing *
-// * institutes,nor the agencies providing financial support for this *
-// * work  make  any representation or  warranty, express or implied, *
-// * regarding  this  software system or assume any liability for its *
-// * use.  Please see the license in the file  LICENSE  and URL above *
-// * for the full disclaimer and the limitation of liability.         *
-// *                                                                  *
-// * This  code  implementation is the result of  the  scientific and *
-// * technical work of the GEANT4 collaboration.                      *
-// * By using,  copying,  modifying or  distributing the software (or *
-// * any work based  on the software)  you  agree  to acknowledge its *
-// * use  in  resulting  scientific  publications,  and indicate your *
-// * acceptance of all terms of the Geant4 Software license.          *
-// ********************************************************************
-//
-// $Id: B1DetectorConstruction.cc 94307 2015-11-11 13:42:46Z gcosmo $
-//
-/// \file B1DetectorConstruction.cc
-/// \brief Implementation of the B1DetectorConstruction class
-
 #include "B1DetectorConstruction.hh"
 #include "B1DetectorConstructionMessenger.hh"
 
@@ -255,7 +225,7 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
         new G4Tubs("Cylinder",                        //its name
                 0,                                //Rmin
                 (20+1)*mm,                     //+1 is al surface        //Rmax
-                0.5*cylinderZ,                             //deltaZ
+                0.5*(cylinderZ),                             //deltaZ
                 0,                                //Phimin
                 360*degree);                      //Phimax
     G4LogicalVolume* log_cylinder = 
@@ -276,9 +246,33 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     // ===================================================================================
 
     // ===================================================================================
+
+    // CylinderAl
+    G4Tubs*  Alcylinder = 
+        new G4Tubs("AlCylinder",                        //its name
+                20,                                //Rmin
+                (20+1)*mm,                     //+1 is al surface        //Rmax
+                0.5*cylinderZ,                             //deltaZ
+                0,                                //Phimin
+                360*degree);                      //Phimax
+    G4LogicalVolume* log_cylinder_Al = 
+        new G4LogicalVolume(Alcylinder,
+                materialAl,                      //material
+                "CylinderAl");                      //name                                                                    
+    new G4PVPlacement( 0,                       //no rotation
+              G4ThreeVector(0,0,0),            
+            log_cylinder_Al,                //its logical volume
+            "CylinderAl",              //its name
+            log_cylinder,              //its mother  volume
+            false,                   //no boolean operation
+            0,                       //copy number
+            checkOverlaps);          //overlaps checking
+    // ===================================================================================
+
+    // ===================================================================================
     double NaIcylinderZ = (10)*mm; 
     G4Tubs*  solid_cylinder_NaI = 
-        new G4Tubs("Cylinder",                        //its name
+        new G4Tubs("CylinderNaI",                        //its name
                 0,                                //Rmin
                 (20)*mm,                             //Rmax
                 0.5*NaIcylinderZ,                             //deltaZ
@@ -287,12 +281,12 @@ G4VPhysicalVolume* B1DetectorConstruction::Construct()
     G4LogicalVolume* log_cylinder_NaI = 
         new G4LogicalVolume(solid_cylinder_NaI,
                 NaI,                      //material
-                "Cylinder");                      //name                                                                   
+                "CylinderNaI");                      //name                                                                   
     new G4PVPlacement( 0,                       //no rotation
             //G4ThreeVector(0,0.4*mm,0),
             G4ThreeVector(0,0,-0.4*mm),
             log_cylinder_NaI,                //its logical volume
-            "Cylinder",              //its name
+            "CylinderNaI",              //its name
             log_cylinder,              //its mother  volume
             false,                   //no boolean operation
             0,                       //copy number
@@ -313,7 +307,7 @@ double Alslice_height=fAlthick;
 materialAl,                      //material
                           "Alslice");                      //name
   new G4PVPlacement( 0,
-                         G4ThreeVector(0,0,5*mm),
+                         G4ThreeVector(0,0,-6*mm),
                          logicAlslice,                //its logical volume
                          "Alslice",              //its name
                          log_cylinder,              //its mother  volume
@@ -358,6 +352,33 @@ materialAl,                      //material
             checkOverlaps);          //overlaps checking
     // ===================================================================================
 
+    // ===================================================================================
+    //PMT_glass after NaI
+G4Material* materialGlass   = nist->FindOrBuildMaterial("G4_GLASS_PLATE");
+    double PMTcylinderZ = (2)*mm; 
+    G4Tubs*  solid_cylinder_PMT = 
+        new G4Tubs("CylinderPMT",                        //its name
+                0,                                //Rmin
+                (20)*mm,                             //Rmax
+                0.5*PMTcylinderZ,                             //deltaZ
+                0,                                //Phimin
+                360*degree);                      //Phimax
+    G4LogicalVolume* log_cylinder_PMT = 
+        new G4LogicalVolume(solid_cylinder_PMT,
+                materialGlass,                      //material
+                "CylinderPMT");                      //name                                                                   
+    new G4PVPlacement( 0,                       //no rotation
+            //G4ThreeVector(0,-8*mm,0),
+            G4ThreeVector(0,0,8*mm),
+            log_cylinder_PMT,                //its logical volume
+            "CylinderPMT",              //its name
+            log_cylinder,              //its mother  volume
+            false,                   //no boolean operation
+            0,                       //copy number
+            checkOverlaps);          //overlaps checking
+
+
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // ===================================================================================
@@ -365,7 +386,6 @@ materialAl,                      //material
 
     G4UniformMagField* magField = 
         new G4UniformMagField(G4ThreeVector(0.,0.,-655.5*gauss)); //define the magnetic.
-    //G4FieldManager* fieldMgr = G4TransportationManager::GetTransportationManager()->GetFieldManager(); 
     G4FieldManager* fieldMgr =new G4FieldManager(); 
     fieldMgr->SetDetectorField(magField);
     fieldMgr->CreateChordFinder(magField);
@@ -397,15 +417,11 @@ materialAl,                      //material
 void B1DetectorConstruction::set_position(int i){
     if ( !( i>0 and i<9 ) ){
         G4cout << "the position is not in [1,8], use 1 instead."<<G4endl;
-        detector_position = (position_list.at(1)-200)*mm;
+        detector_position = (position_list.at(1)-200-G4UniformRand()*5)*mm;
     }
     else{
-        detector_position = (position_list.at(i)-200)*mm;
+        detector_position = (position_list.at(i)-200-G4UniformRand()*5)*mm;
     }
-    // G4RotationMatrix rotm = G4RotationMatrix();
-    // rotm.rotateX(90*degree);
-    // G4ThreeVector position(detector_position,chamberYPos-100*mm-0.5*(cylinderZ)-10*mm,0);
-    // G4Transform3D transform(rotm,position);  
     phy_cylinder->SetTranslation(G4ThreeVector(detector_position,chamberYPos-100*mm-0.5*(cylinderZ)-10*mm,0));
     phy_left_plane_Al->SetTranslation(G4ThreeVector(detector_position-15.75*mm,chamberYPos-100*mm-10*0.5*mm,0));        
     phy_right_plane_Al->SetTranslation(G4ThreeVector(detector_position+15.75*mm,chamberYPos-100*mm-10*0.5*mm,0));        

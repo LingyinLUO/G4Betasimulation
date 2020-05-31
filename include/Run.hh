@@ -24,12 +24,7 @@ public:
     virtual ~Run();
     void initTree();
     void saveTree() const;
-    void Fill();
-    //void AddEnergy1(double Eng1);
-    //void AddEnergy2(double Eng2);
-    //void AddEnergy3(double Eng3);
-    //void AddLength(double fTrackLength);
-    //void RecPrimPartEng(double fGunEnergy){_GunEng =fGunEnergy; };
+    void Fill();  
     void AddEnergy(double E);
    void SetROOTFullName(G4String NewRootFileFullName){ rootFileName = NewRootFileFullName;};
     
@@ -37,11 +32,6 @@ private:
     G4String rootFileName;
     TTree *_tree;
     TFile *_file;
-  /*Double_t _energyDisFirst;
-    Double_t _energyDisSecond;
-    Double_t _energyDisThird;
-    Double_t  _TrackLength;
-    Double_t _GunEng;*/
     Double_t _energy;
     RunMessenger* fRunMessenger;
 };
