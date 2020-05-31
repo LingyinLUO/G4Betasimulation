@@ -19,6 +19,8 @@
 #include "G4FieldManager.hh"
 #include "G4GlobalMagFieldMessenger.hh"
 #include "G4AutoDelete.hh"
+#include "G4VisAttributes.hh"
+
 
 
 
@@ -402,6 +404,29 @@ G4Material* materialGlass   = nist->FindOrBuildMaterial("G4_GLASS_PLATE");
   
    // Register the field messenger for deleting
    G4AutoDelete::Register(fMagFieldMessenger);
+
+
+
+  //===================================================================================  
+  // Visualization 
+  //===================================================================================  
+
+    G4VisAttributes* boxVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0)); //white
+    G4VisAttributes* hatVisAtt= new G4VisAttributes(G4Colour(1.0,0.0,0.0)); //red
+    G4VisAttributes* chamberVisAtt = new G4VisAttributes(G4Colour(0.5,0.5,0.5));//gray
+    G4VisAttributes* AbsorborVisAtt = new G4VisAttributes(G4Colour(0.0,0.0,1.0));//blue
+    G4VisAttributes* WindowVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,0.0));//yellow
+
+    logicWorld->SetVisAttributes(boxVisAtt);
+    logicalvacuumBox->SetVisAttributes(boxVisAtt);
+    log_left_plane_Al->SetVisAttributes(boxVisAtt);
+    log_right_plane_Al->SetVisAttributes(boxVisAtt);
+    logicAlslice->SetVisAttributes(WindowVisAtt);
+    logicalChamber->SetVisAttributes(chamberVisAtt);
+    logicalFePlane->SetVisAttributes(hatVisAtt);
+    log_cylinder_NaI->SetVisAttributes(AbsorborVisAtt);
+    logicalwindow_vacuum->SetVisAttributes(WindowVisAtt);
+    log_cylinder_PMT->SetVisAttributes(chamberVisAtt);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
